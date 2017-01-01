@@ -1,0 +1,22 @@
+{
+    "name": "android-changelog-api",
+    "version": "0.1.0",
+    "description": "API for Android Changelog app",
+    "private": true,
+    "scripts": {
+        "start": "node src/app.js",
+        "watch": "nodemon --watch src/ src/app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "body-parser": "^1.15.2",
+        "cheerio": "^0.22.0",
+        "debug": "^2.6.0",
+        "express": "^4.14.0",
+        "morgan": "^1.7.0",
+        "request": "^2.79.0"
+    },
+    "devDependencies": {
+        "nodemon": "^1.11.0"
+    }
+}
