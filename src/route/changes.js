@@ -22,19 +22,16 @@ router.get('/', (req, res, next) => {
     request(config, (error, response, html) => {
         if (!error && response.statusCode == 200) {
             const $ = cheerio.load(html);
-
             const changes = $('.recent-change')
-                .map((i, elem) => $(elem).text()).get();
-
-            changes.forEach(change => console.log(change));
-
+                .map((i, elem) => $(elem).text())
+                .get();
             res.json({ packageName, changes });
         } else {
             const err = new Error('Could not request changes');
             err.status = 404;
             next(err);
         }
-    })
+    });
 });
 
 module.exports = router;
