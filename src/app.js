@@ -3,7 +3,7 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 
 const auth = require('./service/auth');
-const changesRoutes = require('./route/changes');
+const changelogsRoutes = require('./route/changelogs');
 
 // Create app
 const app = express();
@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Add routes after authentication
 app.use(auth.validate);
-app.use('/changes', changesRoutes);
+app.use('/changelogs', changelogsRoutes);
 
 // Map unknown requests to 404
 app.use((req, res, next) => {
