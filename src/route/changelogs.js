@@ -2,8 +2,8 @@ const router = require('express').Router();
 
 const scraper = require('../service/scraper');
 
-router.get('/', (req, res, next) => {
-    const packageName = req.query.package;
+router.get('/:package/latest', (req, res, next) => {
+    const packageName = req.params.package;
 
     if (!packageName) {
         const err = new Error('Undefined query');
