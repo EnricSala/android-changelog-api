@@ -5,17 +5,21 @@ const BASE_URL = 'https://play.google.com/store/apps/details?hl=en&id=';
 const HEADERS = { 'Accept-Language': 'en-US,en;q=0.8' };
 
 function scan(packageName) {
+    const cleanPackageName = clean(packageName);
     const config = {
-        url: BASE_URL + clean(packageName),
+        url: BASE_URL + cleanPackageName,
         headers: HEADERS
     };
     return request(config)
         .then(html => {
             const $ = cheerio.load(html);
-            changes = $('.recent-change')
+            changesList = $('.recent-change')
                 .map((i, elem) => $(elem).text())
                 .get();
-            return result = { changes };
+            return result = {
+                packageName: cleanPackageName,
+                changes: changesList
+            };
         });
 }
 

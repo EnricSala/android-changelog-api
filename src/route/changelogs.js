@@ -14,8 +14,7 @@ router.get('/:package/latest', (req, res, next) => {
     scraper
         .scan(packageName)
         .then(result => {
-            const changes = result.changes;
-            res.json({ packageName, changes });
+            res.json(result);
         })
         .catch(error => {
             const err = new Error('Could not request info');
