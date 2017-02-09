@@ -6,7 +6,7 @@ const headers = { 'Accept-Language': 'en-US,en;q=0.8' };
 
 function scan(packageName) {
     const config = {
-        url: baseUrl + packageName,
+        url: baseUrl + clean(packageName),
         headers: headers
     };
     return request(config)
@@ -17,6 +17,14 @@ function scan(packageName) {
                 .get();
             return result = { changes };
         });
+}
+
+function clean(packageName) {
+    const MAX_PACKAGE_LENGTH = 100;
+    const NON_ALLOWED_CHARS = /[^\w\.]/g;
+    return packageName
+        .substr(0, MAX_PACKAGE_LENGTH)
+        .replace(NON_ALLOWED_CHARS, '');
 }
 
 module.exports = { scan };
