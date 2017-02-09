@@ -1,13 +1,13 @@
 const request = require('request-promise');
 const cheerio = require('cheerio');
 
-const baseUrl = 'https://play.google.com/store/apps/details?hl=en&id=';
-const headers = { 'Accept-Language': 'en-US,en;q=0.8' };
+const BASE_URL = 'https://play.google.com/store/apps/details?hl=en&id=';
+const HEADERS = { 'Accept-Language': 'en-US,en;q=0.8' };
 
 function scan(packageName) {
     const config = {
-        url: baseUrl + clean(packageName),
-        headers: headers
+        url: BASE_URL + clean(packageName),
+        headers: HEADERS
     };
     return request(config)
         .then(html => {
