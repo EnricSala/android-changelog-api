@@ -1,5 +1,6 @@
 const request = require('request-promise');
 const cheerio = require('cheerio');
+const crypto = require('crypto');
 
 const BASE_URL = 'https://play.google.com/store/apps/details?hl=en&id=';
 const HEADERS = { 'Accept-Language': 'en-US,en;q=0.8' };
@@ -18,7 +19,8 @@ function scan(packageName) {
                 .get();
             return result = {
                 packageName: cleanPackageName,
-                changes: changesList
+                changes: changesList,
+                changesHash: hash(changesList.join())
             };
         });
 }
@@ -29,6 +31,12 @@ function clean(packageName) {
     return packageName
         .substr(0, MAX_PACKAGE_LENGTH)
         .replace(NON_ALLOWED_CHARS, '');
+}
+
+function hash(payload) {
+    return crypto.createHash('md5')
+        .update(payload, 'utf8')
+        .digest('base64');
 }
 
 module.exports = { scan };
