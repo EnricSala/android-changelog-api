@@ -1,5 +1,5 @@
 const express = require('express');
-const logger = require('morgan');
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
 const auth = require('./service/auth');
@@ -11,7 +11,10 @@ app.set('etag', false);
 app.set('x-powered-by', false);
 
 // Configure middlewares
-app.use(logger('dev'));
+const logFormat =
+    ':date[iso] :method ":url"'
+    + ' res=:status size=:res[content-length]';
+app.use(morgan(logFormat));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
