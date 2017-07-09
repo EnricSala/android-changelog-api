@@ -12,8 +12,8 @@ app.set('x-powered-by', false);
 
 // Configure middlewares
 const logFormat =
-    ':date[iso] :method ":url"'
-    + ' res=:status size=:res[content-length]';
+    ':date[iso] :method ":url" res=:status'
+    + ' time=:response-time size=:res[content-length]';
 app.use(morgan(logFormat));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
