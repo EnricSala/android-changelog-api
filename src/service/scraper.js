@@ -13,10 +13,7 @@ function scan(packageName) {
     };
     return request(config)
         .then(html => {
-            const $ = cheerio.load(html);
-            changesList = $('.recent-change')
-                .map((i, elem) => $(elem).text())
-                .get();
+            changesList = parseChanges(html);
             return result = {
                 packageName: cleanPackageName,
                 changes: changesList,
@@ -37,6 +34,21 @@ function hash(payload) {
     return crypto.createHash('md5')
         .update(payload, 'utf8')
         .digest('base64');
+}
+
+function parseChanges(html) {
+    const whatsNew = '>What&#39;s New<';
+    const contentOpen = '<content>';
+    const contentClose = '</content>';
+    const whatsNewIdx = html.indexOf(whatsNew);
+    const changesStartIdx = html.indexOf(contentOpen, whatsNewIdx) + contentOpen.length;
+    const changesEndIdx = html.indexOf(contentClose, changesStartIdx);
+    const changesHtml = html.substring(changesStartIdx, changesEndIdx);
+    const changesList = changesHtml.split('<br>')
+        .map(it => it.trim())
+        .map(it => cheerio.load(it).text())
+        .filter(it => it.length > 0);
+    return changesList;
 }
 
 module.exports = { scan };
