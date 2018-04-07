@@ -41,6 +41,7 @@ function parseChanges(html) {
     const contentOpen = '<content>';
     const contentClose = '</content>';
     const whatsNewIdx = html.indexOf(whatsNew);
+    if (whatsNewIdx < 0) return [];
     const changesStartIdx = html.indexOf(contentOpen, whatsNewIdx) + contentOpen.length;
     const changesEndIdx = html.indexOf(contentClose, changesStartIdx);
     const changesHtml = html.substring(changesStartIdx, changesEndIdx);
