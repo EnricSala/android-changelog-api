@@ -38,11 +38,13 @@ function hash(payload) {
 
 function parseChanges(html) {
     const whatsNew = '>What&#39;s New<';
-    const contentOpen = '<content>';
+    const contentOpen = '<content';
+    const contentOpenEnd = '>';
     const contentClose = '</content>';
     const whatsNewIdx = html.indexOf(whatsNew);
     if (whatsNewIdx < 0) return [];
-    const changesStartIdx = html.indexOf(contentOpen, whatsNewIdx) + contentOpen.length;
+    const contentOpenIdx = html.indexOf(contentOpen, whatsNewIdx) + contentOpen.length;
+    const changesStartIdx = html.indexOf(contentOpenEnd, contentOpenIdx) + contentOpenEnd.length;
     const changesEndIdx = html.indexOf(contentClose, changesStartIdx);
     const changesHtml = html.substring(changesStartIdx, changesEndIdx);
     const changesList = changesHtml.split('<br>')
